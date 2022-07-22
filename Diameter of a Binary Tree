@@ -1,3 +1,6 @@
+TC - O(N^2)
+SC - O(HEIGHT)
+
 //{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
@@ -141,3 +144,68 @@ int main() {
 }
 
 // } Driver Code Ends
+
+=======================================================================================================================================================================
+=======================================================================================================================================================================
+=======================================================================================================================================================================
+
+                                                                        OPTIMIZE APPROACH
+                                                                        
+/**********************************************************TC - O(N)
+                                                           SC - O(HEIGHT)
+
+	Following is the Binary Tree Node class structure
+
+	template <typename T>
+	class BinaryTreeNode {
+    	public : 
+    	T data;
+    	BinaryTreeNode<T> *left;
+    	BinaryTreeNode<T> *right;
+
+    	BinaryTreeNode(T data) {
+        	this -> data = data;
+        	left = NULL;
+        	right = NULL;
+    	}
+	};
+
+***********************************************************/
+// int height(BinaryTreeNode<int>* node){
+//         // code here 
+//         if(node == NULL)
+//         {
+//             return 0;
+//         }
+        
+//         int left = height(node->left);
+//         int right = height(node->right);
+        
+//         int ans = max(left,right) + 1;
+//         return ans;
+//     }
+pair<int,int> diameterOfBinaryTreeFast(BinaryTreeNode<int>* node)
+{
+    if(node == NULL)
+    {
+        pair<int,int>p = make_pair(0,0);
+        return p;
+    }
+    pair<int,int> left = diameterOfBinaryTreeFast(node->left);
+    pair<int,int> right = diameterOfBinaryTreeFast(node->right);
+    
+    int op1 = left.first;
+    int op2 = right.second;
+    int op3 = left.second + right.second + 1;
+    
+    pair<int,int> ans;
+    ans.first =  max(op1,max(op2,op3));
+    ans.second = max(left.second,right.second) + 1;
+    return ans;
+}
+
+
+int diameterOfBinaryTree(BinaryTreeNode<int>* node) {
+	// Write your code here
+    return diameterOfBinaryTreeFast(node).first;
+}
