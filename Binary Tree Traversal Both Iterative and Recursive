@@ -1,0 +1,152 @@
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+/*
+The Solve In Iterative Mode:
+The preorder In Iterative Mode: 12435786
+
+The inorder In Iterative Mode: 42175836
+
+The postorder In Iterative Mode: 42785631
+
+The preorder Recursion: 1 2 4 3 5 7 8 6
+The postorder Recursion: 4 2 7 8 5 6 3 1
+The inorder Recursion: 4 2 1 7 5 8 3 6
+*/
+
+class Node
+{
+    public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int data)
+    {
+        this->data = data;
+        this->left = NULL;
+        this->right = NULL;
+    }
+};
+
+void solveInterative(Node* root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+
+    stack<pair<Node*,int>> st;
+    st.push({root,1});
+    string pre = "";
+    string in = "";
+    string post = "";
+    while(!st.empty())
+    {
+        Node* node = st.top().first;
+        int state = st.top().second;
+        
+        if(state == 1)
+        {
+            pre += to_string(node->data);
+            st.top().second = state + 1;
+            if(node->left)
+            {
+                st.push({node->left,1});
+            }
+        }
+        else if(state == 2)
+        {
+            in += to_string(node->data);
+            st.top().second = state + 1;
+            if(node->right)
+            {
+                st.push({node->right,1});
+            }
+        }
+        else
+        {
+            post += to_string(node->data);
+            st.pop();
+        }
+    }
+        cout <<"The preorder In Iterative Mode: "<< pre <<" "<< endl <<endl;
+        cout <<"The inorder In Iterative Mode: "<< in <<" "<< endl << endl;
+        cout <<"The postorder In Iterative Mode: "<< post<<" "<< endl << endl;
+}
+
+void preorderRecursion(Node* root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+
+    cout << root->data <<" ";
+    preorderRecursion(root->left);
+    preorderRecursion(root->right);
+}
+
+void postorderRecursion(Node* root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+
+    postorderRecursion(root->left);
+    postorderRecursion(root->right);
+    cout << root->data <<" ";
+}
+
+void inorderRecursion(Node* root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+
+    inorderRecursion(root->left);
+    cout << root->data <<" ";
+    inorderRecursion(root->right);
+}
+
+
+int main()
+{
+    /* Construct the following tree
+               1
+             /   \
+            /     \
+           2       3
+          /      /   \
+         /      /     \
+        4      5       6
+              / \
+             /   \
+            7     8
+    */
+ 
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+    root->right->left = new Node(5);
+    root->right->right = new Node(6);
+    root->right->left->left = new Node(7);
+    root->right->left->right = new Node(8);
+ 
+    cout <<"The Solve In Iterative Mode: "<< endl ;
+    solveInterative(root);
+    cout <<" The preorder Recursion: " ;
+    preorderRecursion(root);
+    cout << endl;
+    cout <<" The postorder Recursion: " ;
+    postorderRecursion(root);
+    cout << endl;
+    cout <<" The inorder Recursion: " ;
+    inorderRecursion(root);
+    cout << endl;
+ 
+    return 0;
+}
