@@ -1,0 +1,32 @@
+class Solution {
+public:
+    // 1. check if root NULL then it create new node and make it new root;
+    // 2. if the value is less or greater than current root value then it go to
+// else if part which make link between root node and new node according to bst rule;
+
+    void insert(TreeNode* & root,int x){
+        if(root==NULL){
+            root= new TreeNode(x);
+            return ;
+        }
+        else if(root->val<x){
+          insert(root->right,x);
+        }
+        else if(root->val>x){
+            insert(root->left,x);
+        }
+    }
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        // 1.first create a node with the intial value of vector.
+        // 2.make a temp pointer
+        // 3.now add remaining value of vector by insert function according to bst rule;
+        // 4. return root;
+
+        TreeNode* root=new TreeNode(preorder[0]);
+        TreeNode* temp=root;
+        for(int i=1;i<preorder.size();i++){
+            insert(temp,preorder[i]);
+        }
+        return root;
+    }
+};
