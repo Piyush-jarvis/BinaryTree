@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void RightViewHelp(TreeNode* root, vector<int> &ans, int lvl)
+{
+        if(root == NULL)
+        {
+            return ;
+        }
+        if(lvl == ans.size())//mtlb ki naya level h toh jo phele node hogi use vector me add kar dena
+        {
+            ans.push_back(root->val);
+        }
+        RightViewHelp(root->right,ans,lvl+1);
+        RightViewHelp(root->left,ans,lvl+1);
+}
+
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> ans;
+        RightViewHelp(root,ans,0);
+        return ans;
+    }
+};
